@@ -55,6 +55,18 @@ def test_region_ids_uniqueness(fetch_data):
 
 @pytest.mark.hr
 @pytest.mark.employees
+def test_employee_ids_uniqueness(fetch_data):
+    """
+    Test  to verify that each employee_id from the [hr].[employees] table is unique,
+    there no duplicate IDs.
+    """
+    query = "SELECT employee_id FROM [hr].[employees]"
+    employee_ids = [record[0] for record in fetch_data(query)]
+    assert check_uniqueness(employee_ids), "Employee ID uniqueness check failed."
+
+
+@pytest.mark.hr
+@pytest.mark.employees
 def test_employee_email_format(fetch_data):
     """
     Test to verify that all employee emails in [hr].[employees]
